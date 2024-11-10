@@ -1,0 +1,154 @@
+{% load static %}
+{% load socialaccount i18n %}
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registracija</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Prilagođeni CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .signup-section {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .signup-section h1 {
+            font-size: 2.5rem;
+            color: #343a40;
+        }
+
+        .signup-section .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .signup-section .form-control {
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .signup-section .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 10px;
+            padding: 10px 15px;
+        }
+
+        .signup-section .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .signup-section .link-primary {
+            color: #007bff;
+        }
+
+        .signup-section .link-primary:hover {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        .signup-section .social-buttons .btn {
+            width: 48%;
+            border-radius: 10px;
+        }
+
+        .signup-section .social-buttons .btn-google {
+            background-color: #db4437;
+            color: #ffffff;
+        }
+
+        .signup-section .social-buttons .btn-google:hover {
+            background-color: #c23321;
+        }
+
+        .signup-section .social-buttons .btn-github {
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        .signup-section .social-buttons .btn-github:hover {
+            background-color: #24292e;
+        }
+    </style>
+</head>
+<body>
+<section class="signup-section">
+    <div class="text-center mb-4">
+        <h1>Registracija</h1>
+    </div>
+
+    <p class="text-center mb-4">
+        Već imate račun? <a href="{% url 'login_user' %}" class="link-primary fw-semibold">Prijavite se</a>.
+    </p>
+
+    <form method="post" action="{% url 'account_signup' %}" class="needs-validation" novalidate>
+        {% csrf_token %}
+        
+        <div class="mb-4">
+            <label for="username" class="form-label">Korisničko ime</label>
+            <input type="text" name="username" id="username" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" id="email" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="password1" class="form-label">Lozinka</label>
+            <input type="password" name="password1" id="password1" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="password2" class="form-label">Potvrdite lozinku</label>
+            <input type="password" name="password2" id="password2" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="phone_number">Broj telefona</label>
+            <input type="tel" name="phone_number" id="phone_number" class="form-control form-control-lg" pattern="\+385[0-9]{9}" required>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">Registracija</button>
+        </div>
+    </form>
+
+    {% if SOCIALACCOUNT_ENABLED %}
+        <div class="text-center mt-4">
+            <p class="mb-3">Ili se registrirajte putem:</p>
+            <div class="social-buttons d-flex justify-content-between">
+                <a href="{% provider_login_url 'google' %}" class="btn btn-google">
+                    <i class="fab fa-google"></i> Google
+                </a>
+                <a href="{% provider_login_url 'github' %}" class="btn btn-github">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</section>
+
+<!-- Bootstrap JS i ovisnosti -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

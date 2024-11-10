@@ -1,0 +1,93 @@
+{% load socialaccount i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odaberi metodu prijave</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-box h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+        }
+        .btn-login {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .btn-login i {
+            margin-right: 8px;
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .login-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Odaberi metodu prijave</h1>
+            <!-- Regular Login Button -->
+            <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg btn-login">Obična prijava</a>
+
+            <!-- Google Login Button -->
+            <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-outline-danger btn-lg btn-login">
+                <i class="fab fa-google"></i> Prijava Google-om
+            </a>
+
+            <!-- GitHub Login Button -->
+            <a href="{% provider_login_url 'github' %}" class="btn btn-outline-dark btn-lg btn-login">
+                <i class="fab fa-github"></i> Prijava GitHub-om
+            </a>
+
+            <!-- Crypto Wallet Login Button -->
+            <a href="{% url 'moralis_auth' %}" class="btn btn-outline-info btn-lg btn-login">
+                <i class="fas fa-wallet"></i> Prijava kripto novčanikom
+            </a>
+
+            <div class="login-footer">
+                <p>Nemaš račun? <a href="{% url 'account_signup' %}">Registriraj se</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

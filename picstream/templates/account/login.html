@@ -1,0 +1,61 @@
+{% load static %}
+{% load socialaccount i18n %}
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prijava</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Custom CSS (Optional) -->
+    <style>
+        .h-custom-2 {
+            height: calc(100% - 50px);
+        }
+    </style>
+</head>
+<body>
+<section class="vh-100">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <!-- Left side - Form -->
+            <div class="col-sm-6 text-black d-flex flex-column justify-content-center align-items-center">
+                <div class="px-5 ms-xl-4 w-100">
+                    <h1 class="text-primary fw-bold pt-5 mt-xl-4 text-center">Dobrodošli natrag!</h1>
+                </div>
+                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5 w-100">
+                    <form style="width: 23rem; margin: auto;" method="post" action="{% url 'regular_login' %}">
+                        {% csrf_token %}
+                        <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Prijava</h3>
+                        <div class="form-outline mb-4">
+                            <input type="text" name="login" id="username" class="form-control form-control-lg" required />
+                            <label class="form-label" for="username">Korisničko ime ili e-pošta</label>
+                        </div>
+                        <div class="form-outline mb-4">
+                            <input type="password" name="password" id="password" class="form-control form-control-lg" required />
+                            <label class="form-label" for="password">Lozinka</label>
+                        </div>
+
+                        {{ redirect_field }}
+
+                        <div class="pt-1 mb-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Prijavite se</button>
+                        </div>
+
+                        <p class="text-center">Nemate račun? <a href="{% url 'account_signup' %}" class="link-primary">Registrirajte se</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap JS and dependencies (Optional for additional functionality) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

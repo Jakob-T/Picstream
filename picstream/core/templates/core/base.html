@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'core/base.css' %}">
+    
+    <title>Picstream</title>
+
+    <style>
+        /* Sidenav Styles */
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1031;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidenav a {
+            padding: 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: #fff;
+        }
+        
+        /* Navbar Styles */
+        #NavButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 12px;
+            font-weight: 500;
+        }
+        #logged_as {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+        }
+        footer a {
+            color: #343a40;
+            margin: 0 10px;
+            font-size: 24px;
+        }
+        footer a:hover {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidenav -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="{% url 'home' %}">Početna stranica</a>
+        <a href="{% url 'all_images' %}">Slike</a>
+        <a href="{% url 'upload_image' %}">Dodaj Sliku</a>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="btn btn-success" type="button" onclick="openNav()">
+                <i class="fas fa-bars"></i> Meni
+            </button>
+            <div>
+                {% if not request.user.is_authenticated %}
+                    <a class="btn btn-outline-success me-2" href="{% url 'login_user' %}">Prijava</a>
+                {% else %}
+                    <a class="btn btn-outline-primary me-2" href="{% url 'profile' %}">Profil</a>
+                    <form method="post" action="{% url 'account_logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Odjava</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if request.user.is_authenticated %}
+        <p id="logged_as">Prijavljen kao: {{ request.user.username }}</p>
+    {% endif %}
+
+    <div class="container my-5">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    
+    <footer class="text-center">
+        <div class="container">
+            <h5>Kontaktiraj nas</h5>
+            <p>Mob: <a href="tel:+385998253643">099 825 3643</a></p>
+            <div class="my-3">
+                <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+        
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3>Profil: {{ user.username }}</h3>
+            <a href="{% url 'home' %}" class="btn btn-secondary btn-sm">Povratak na početak</a>
+        </div>
+        <div class="card-body">
+            <!-- Form for updating profile information -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label><strong>Korisničko ime:</strong></label>
+                    <input type="text" value="{{ user.username }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email"><strong>E-pošta:</strong></label>
+                    <input type="email" name="email" id="email" value="{{ user.email }}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="first_name"><strong>Ime:</strong></label>
+                    <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="last_name"><strong>Prezime:</strong></label>
+                    <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="phone_number"><strong>Broj mobitela:</strong></label>
+                    <input type="tel" name="phone_number" id="phone_number" value="{{ user.phone_number }}" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Spremi promjene</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display user images -->
+    <div class="mt-4">
+        <h4>{{ user.username }}'s Slike</h4>
+        {% if images %}
+            <div class="row">
+                {% for image in images %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <a href="{% url 'image_detail' image.id %}">
+                                <img src="{{ image.url }}" class="card-img-top" alt="Image">
+                            </a>
+                            <div class="card-body">
+                                {% if image.caption %}
+                                    <p class="card-text">{{ image.caption }}</p>
+                                {% else %}
+                                    <p class="card-text text-muted">Nema opisa</p>
+                                {% endif %}
+                                <small class="text-muted">Dodano: {{ image.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Korisnik još nije dodao nijednu sliku.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

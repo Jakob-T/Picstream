@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Sve Slike</h1>
+    <div class="row">
+        {% for image in images %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <a href="{% url 'image_detail' image.id %}">
+                    <img src="{{ image.url }}" class="card-img-top" alt="Image">
+                </a>
+                
+                <div class="card-body">
+                    {% if image.caption %}
+                    <p class="card-text">{{ image.caption }}</p>
+                    {% else %}
+                    <p class="card-text text-muted">Nema opisa</p>
+                    {% endif %}
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Lajkovi: {{ image.likes.count }}</span>
+                    
+                        <span class="text-muted">Komentari: {{ image.comments.count }}</span>
+                    </div>
+                    
+                    <small class="text-muted">Dodano: {{ image.created_at|date:"d.m.Y H:i" }}</small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Nema dostupnih slika.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
